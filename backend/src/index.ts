@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import userRoutes from './routes/user'
 import authRoutes from './routes/auth'
+import { User } from './entities/user'
 
 // import { AppDataSource } from './data.source'
 
@@ -28,6 +29,8 @@ app.get('/', (req:Request,res:Response)=>{
 
 
 app.use('/user', userRoutes)
+app.use('/auth', authRoutes)
+
 
 app.listen(process.env.PORT,async () => {
     console.log(`Application started on port 7070!`);
@@ -38,7 +41,7 @@ app.listen(process.env.PORT,async () => {
             port:+process.env.DB_PORT!,
             username:process.env.DB_USERNAME,
             password:process.env.DB_PASSWORD,
-            entities:[],
+            entities:[User],
             synchronize:true,
             logging:false
         })  
