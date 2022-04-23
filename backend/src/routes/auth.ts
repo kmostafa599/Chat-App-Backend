@@ -48,10 +48,9 @@ routes.post('/login',async (req,res)=>{
     try{
         const {
             email,
-            username,
             password
         } = req.body
-        const user  = await User.findOne({where:[{email},{username}]})
+        const user  = await User.findOne({where:[{email}]})
         if(!user){
             return res.status(400).json({message:"User with this username or email does not exist!"})
         }

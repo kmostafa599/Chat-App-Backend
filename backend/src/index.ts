@@ -6,7 +6,12 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import userRoutes from './routes/user'
 import authRoutes from './routes/auth'
+import conversationRoutes from './routes/auth'
 import { User } from './entities/user'
+import { Message } from './entities/message'
+import { Server, Socket } from 'socket.io'
+import * as http from 'http';
+import { Conversation } from './entities/conversation'
 
 // import { AppDataSource } from './data.source'
 
@@ -19,6 +24,15 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(json());
+const server = http.createServer(app)
+const io = new Server(server)
+
+io.on('connection', socket=>{
+    socket.emit("your id", socket.id)
+    socket.on("send message", body => {
+        io.emit("message", body)
+    })
+})
 
 app.use(urlencoded({ extended: false }));
 
@@ -30,7 +44,7 @@ app.get('/', (req:Request,res:Response)=>{
 
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
-
+app.use('/conversations', conversationRoutes)
 
 app.listen(process.env.PORT,async () => {
     console.log(`Application started on port 7070!`);
@@ -41,7 +55,7 @@ app.listen(process.env.PORT,async () => {
             port:+process.env.DB_PORT!,
             username:process.env.DB_USERNAME,
             password:process.env.DB_PASSWORD,
-            entities:[User],
+            entities:[User,Message,Conversation],
             synchronize:true,
             logging:false
         })  

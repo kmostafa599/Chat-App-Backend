@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, OneToMany, JoinTable, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, OneToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm"
+import { Conversation } from "./conversation"
+import { Message } from "./message"
 
 @Entity('User')
 export class User extends BaseEntity {
@@ -25,7 +27,19 @@ export class User extends BaseEntity {
     })
     password: string
 
+    @OneToMany(
+        ()=>Message,
+        message => message.user
 
+    )
+    @JoinColumn({
+        name: "message",
+
+    })
+    messages:Message[]
+
+    @ManyToMany(() => User)
+    conversations: Conversation[];
 
 
 }
