@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, OneToMany, JoinTable, ManyToOne } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToMany, OneToMany, JoinTable, ManyToOne, JoinColumn } from "typeorm"
 import { Conversation } from "./conversation"
 import { User } from "./user"
 
@@ -23,6 +23,7 @@ export class Message extends BaseEntity {
         ()=>Conversation,
         conversation=>conversation.messages
     )
+   
     conversation :Conversation
 
 

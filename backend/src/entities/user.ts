@@ -23,7 +23,6 @@ export class User extends BaseEntity {
     username: string
 
     @Column({
-        unique:true
     })
     password: string
 
@@ -38,9 +37,7 @@ export class User extends BaseEntity {
     })
     messages:Message[]
 
-    @ManyToMany(() => User)
-    conversations: Conversation[];
-
+    
 
 }
 

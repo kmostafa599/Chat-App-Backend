@@ -6,12 +6,16 @@ import morgan from 'morgan'
 import helmet from 'helmet'
 import userRoutes from './routes/user'
 import authRoutes from './routes/auth'
-import conversationRoutes from './routes/auth'
+import conversationRoutes from './routes/conversation'
+import messageRoutes from './routes/message'
+
+
 import { User } from './entities/user'
 import { Message } from './entities/message'
 import { Server, Socket } from 'socket.io'
 import * as http from 'http';
 import { Conversation } from './entities/conversation'
+
 
 // import { AppDataSource } from './data.source'
 
@@ -45,6 +49,8 @@ app.get('/', (req:Request,res:Response)=>{
 app.use('/user', userRoutes)
 app.use('/auth', authRoutes)
 app.use('/conversations', conversationRoutes)
+app.use('/messages', messageRoutes)
+
 
 app.listen(process.env.PORT,async () => {
     console.log(`Application started on port 7070!`);

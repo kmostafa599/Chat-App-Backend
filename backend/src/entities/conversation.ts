@@ -12,6 +12,7 @@ export class Conversation extends BaseEntity {
         ()=>Message,
         message=>message.conversation
     )
+    
     messages :Message[]
 
     @ManyToMany(() => User)
